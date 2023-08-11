@@ -1,0 +1,30 @@
+`{
+  orginization(login: "toast-ninja"){
+    repository(name: "beckend"){
+      pullRequests(first: 3, after: $endCursor){
+        pageInfo{ endCursor }
+        nodes { number title}
+      }
+    }
+  }
+}`
+
+`{
+  rateLimit {
+    cost
+    remaining
+  }
+  orginization(login: "toast-ninja"){
+    repository(name: "beckend"){
+      pullRequests(first: 3, after: $endCursor){
+        pageInfo{ endCursor hasNextPage }
+        nodes { number title}
+      }
+    }
+  }
+}`
+
+// check that nodes are < 500k
+// cost < 5k, 5k requests allowed per/day
+// time < 10s
+// try decreasing max page size to make several smaller requests
